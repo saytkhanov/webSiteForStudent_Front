@@ -1,0 +1,17 @@
+.table {
+    width: 1232px;
+}
+.td {
+    text-align: center;
+}
+.tr {
+    height: 100px;
+}
+.a {
+    font-weight: bold;
+    color: darkblue;
+    font-size: 25px;
+}
+.th {
+    font-size: 20px;
+}
