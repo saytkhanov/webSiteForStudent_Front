@@ -3,7 +3,9 @@ import { Route, Switch } from "react-router-dom";
 import Students from "../Students";
 import { Box, Button, Container, Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import Notes from '../Notes'
+import Notes from '../Notes';
+import StudentsAdmin from '../Admin'
+import Info from '../InfoAboutCompany'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +26,12 @@ function Main(props) {
               </Route>
               <Route path='/student/:id/note'>
                  <Notes/>
+              </Route>
+              <Route path='/aboutUs'>
+                <Info/>
+              </Route>
+              <Route path='/admin'>
+                <StudentsAdmin/>
               </Route>
             </Switch>
           </Grid>

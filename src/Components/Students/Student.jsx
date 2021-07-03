@@ -23,19 +23,20 @@ const useStyles = makeStyles((theme) => ({
 
 function Student({ student, key }) {
   const classes = useStyles();
-
-  const statuses = useSelector((state) => {
-    return state.statuses.items.filter(
-      (item) => item.id === student.lastNote?.status
-    );
-  });
+  //
+  // const statuses = useSelector((state) => {
+  //   return state.statuses.items.filter(
+  //     (item) => item.id === student.lastNote?.status
+  //       .map(status => status)
+  //   );
+  // });
 
   console.log(student);
   return (
     <>
       <tr key={key} className={styles.tr}>
         <td>
-          <img src={student.avatar} />
+          <img src={student.avatar} alt={"avatar"} />
         </td>
         <td className={styles.td}>
           <NavLink
@@ -47,7 +48,7 @@ function Student({ student, key }) {
           </NavLink>
         </td>
         <td className={styles.td}>
-          {dayjs(student.lastNote?.createdAt).format("YY.MM.DD HH : mm")}
+          {dayjs(student.lastNote?.createdAt).format("YY.MM.DD HH:mm")}
         </td>
         <td>
           <button>{student.lastNote?.status}</button>

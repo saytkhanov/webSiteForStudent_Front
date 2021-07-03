@@ -39,9 +39,11 @@ function Header() {
             <Button>
               Админка
             </Button>
-            <Button>
+            <NavLink to='/aboutUs'>
+              <Button>
                 О нас
-            </Button>
+              </Button>
+            </NavLink>
           </Box>
         </Toolbar>
       </Paper>
