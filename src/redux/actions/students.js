@@ -32,7 +32,7 @@ export default function reducers( state= initialState, action) {
       return {
         ...state,
         deleting: false,
-        items: state.items.filter((todo) => todo.id !== action.payload)
+        items: state.items.filter((student) => student.id !== action.payload)
       };
     case "student/delete/pending": // удаление началось
       return {
@@ -57,16 +57,25 @@ export const loadStudents = () => {
   }
 }
 
-export const postStudent = () => {
+export const postStudent = (data) => {
   return async (dispatch) => {
     dispatch({type: "postStudent/load/pending" });
-    const response = await fetch('http://localhost:3004');
+    const response = await fetch('http://localhost:3004', {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+      }
+    );
     const json = await response.json();
     dispatch({
       type: "postStudent/load/fulfilled",
       payload: json
     })
+    window.location.reload()
   }
+
 }
 
 
@@ -80,5 +89,6 @@ export const deleteStudent = (id) => {
       type: "student/delete/fulfilled",
       payload: id
     })
+    window.location.reload()
   }
 }

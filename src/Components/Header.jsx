@@ -8,7 +8,8 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import {useLocation} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
   const classes = useStyles();
+  const location = useLocation();
+
+
 
   return (
     <Container maxWidth={"lg"}>
@@ -37,8 +41,15 @@ function Header() {
               </NavLink>
             </Button>
             <Button>
+              <NavLink to='/admin'>
               Админка
+              </NavLink>
             </Button>
+            {location.pathname === '/admin' || location.pathname === '/status' ? <Button>
+              <NavLink to='/status'>
+                Статусы
+              </NavLink>
+            </Button> : null}
             <NavLink to='/aboutUs'>
               <Button>
                 О нас

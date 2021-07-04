@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Notes from '../Notes';
 import StudentsAdmin from '../Admin'
 import Info from '../InfoAboutCompany'
+import Statuses from '../Admin/Statuses'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,9 @@ function Main(props) {
               </Route>
               <Route path='/admin'>
                 <StudentsAdmin/>
+              </Route>
+              <Route path='/status'>
+                <Statuses/>
               </Route>
             </Switch>
           </Grid>

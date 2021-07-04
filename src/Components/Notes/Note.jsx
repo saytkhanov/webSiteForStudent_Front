@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box, Button,
   FormControl,
@@ -12,6 +12,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { loadStatuses } from '../../redux/actions/statuses'
+import Preloader from '../Preloader'
+import { postStudent } from '../../redux/actions/students'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,13 +26,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Note({ note }) {
+  const [comment, setComment] = useState();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const statuses = useSelector((state) => state.statuses.items);
+  const loading = useSelector(state => state.statuses.loading);
 
-  useEffect(() => dispatch(loadStatuses()), [dispatch])
+  useEffect(() => dispatch(loadStatuses()), [dispatch]);
+
+  const handleSubmit = (e) => {
+    dispatch(postStudent({
+
+    }))
+  }
 
 
-  const classes = useStyles();
+  const handleChangeComment = (e) => {
+    setComment(e.target.value)
+  }
+
+
+  if(loading) {
+    return <Preloader/>
+  }
+
+
   return (
     <>
       <Grid container spacing={4}>
@@ -53,6 +73,8 @@ function Note({ note }) {
           <TextField
             classes={{ root: classes.root }}
             placeholder="Комментарий"
+            value={comment}
+            onChange={handleChangeComment}
           />
         </Grid>
         <Grid item>

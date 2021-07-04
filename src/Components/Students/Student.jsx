@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react'
 import {
   Box,
   Container,
@@ -9,11 +9,12 @@ import {
   Grid,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux'
 import styles from "./styles.module.css";
 import Notes from "../Notes";
 import { NavLink } from "react-router-dom";
 import dayjs from "dayjs";
+import { loadStatuses } from '../../redux/actions/statuses'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Student({ student, key }) {
+function Student({ student, key, elem }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   //
   // const statuses = useSelector((state) => {
   //   return state.statuses.items.filter(
@@ -34,9 +37,9 @@ function Student({ student, key }) {
   console.log(student);
   return (
     <>
-      <tr key={key} className={styles.tr}>
+      <tr  className={styles.tr} key={key}>
         <td>
-          <img src={student.avatar} alt={"avatar"} />
+          <img src={student.avatar} alt={"avatar"} width='100px'/>
         </td>
         <td className={styles.td}>
           <NavLink
@@ -48,10 +51,10 @@ function Student({ student, key }) {
           </NavLink>
         </td>
         <td className={styles.td}>
-          {dayjs(student.lastNote?.createdAt).format("YY.MM.DD HH:mm")}
+          {dayjs(student.lastNote?.updatedAt).format("YY.MM.DD HH:mm")}
         </td>
-        <td>
-          <button>{student.lastNote?.status}</button>
+        <td bgcolor={elem?.color}>
+          {elem?.status}
         </td>
         <td className={styles.td}>{student.notes.length}</td>
       </tr>

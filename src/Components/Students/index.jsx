@@ -7,6 +7,7 @@ import { Box, Button, TextField, Typography } from "@material-ui/core";
 import styles from "./styles.module.css";
 import { makeStyles } from "@material-ui/core/styles";
 import TableHead from "./TableHead";
+import { loadStatuses } from '../../redux/actions/statuses'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,8 +31,12 @@ function Students(props) {
     return item.firstName.toLowerCase().includes(value.toLowerCase());
   });
   const loading = useSelector((state) => state.students.loading);
+  const statuses = useSelector(state => state.statuses.items);
+
 
   useEffect(() => dispatch(loadStudents()), [dispatch]);
+
+  useEffect(() => dispatch(loadStatuses()), [dispatch])
 
   if (loading) {
     return <Preloader />;
@@ -82,11 +87,18 @@ function Students(props) {
         <TableHead />
         <tbody>
           {students.map((student) => {
+            const elem = statuses.find(item => {
+              if(item._id === student.lastNote?.status) {
+                return item
+              }
+              return item
+            })
+            console.log(elem)
             return (
               <Student
                 student={student}
                 key={student._id}
-                setEdited={setSearch}
+                elem={elem}
               />
             );
           })}
