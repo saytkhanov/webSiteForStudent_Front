@@ -46,14 +46,22 @@ export const loadStatuses = () => {
   }
 }
 
-export const postStatus = () => {
+export const postStatus = (data) => {
   return async (dispatch) => {
     dispatch({type: "postStatus/load/pending" });
-    const response = await fetch('http://localhost:3004/status');
+    const response = await fetch('http://localhost:3004/status',
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
     const json = await response.json();
     dispatch({
       type: "postStatus/load/fulfilled",
       payload: json
     })
+    window.location.reload()
   }
 }

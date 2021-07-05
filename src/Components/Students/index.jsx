@@ -3,18 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadStudents } from "../../redux/actions/students";
 import Preloader from "../Preloader";
 import Student from "./Student";
-import { Box, Button, TextField, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableContainer,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import styles from "./styles.module.css";
 import { makeStyles } from "@material-ui/core/styles";
-import TableHead from "./TableHead";
-import { loadStatuses } from '../../redux/actions/statuses'
+import TableHeader from "./TableHead";
+import { loadStatuses } from "../../redux/actions/statuses";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   input: {
-    width: 1225,
+    width: 1182,
   },
 }));
 
@@ -31,12 +41,11 @@ function Students(props) {
     return item.firstName.toLowerCase().includes(value.toLowerCase());
   });
   const loading = useSelector((state) => state.students.loading);
-  const statuses = useSelector(state => state.statuses.items);
-
+  const statuses = useSelector((state) => state.statuses.items);
 
   useEffect(() => dispatch(loadStudents()), [dispatch]);
 
-  useEffect(() => dispatch(loadStatuses()), [dispatch])
+  useEffect(() => dispatch(loadStatuses()), [dispatch]);
 
   if (loading) {
     return <Preloader />;
@@ -50,7 +59,7 @@ function Students(props) {
   };
 
   return (
-    <div>
+    <Container>
       {search ? (
         <Box>
           <Typography color="primary" variant="h5">
@@ -83,28 +92,26 @@ function Students(props) {
           </Button>
         </Box>
       )}
-      <table className={styles.table}>
-        <TableHead />
-        <tbody>
-          {students.map((student) => {
-            const elem = statuses.find(item => {
-              if(item._id === student.lastNote?.status) {
-                return item
-              }
-              return item
-            })
-            console.log(elem)
-            return (
-              <Student
-                student={student}
-                key={student._id}
-                elem={elem}
-              />
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+      <TableContainer component={Paper}>
+        <Table className={styles.table}>
+          <TableHeader />
+          <TableBody>
+            {students.map((student) => {
+              const elem = statuses.find((item) => {
+                if (item._id === student.lastNote?.status) {
+                  return item;
+                }
+                return item;
+              });
+
+              return (
+                <Student student={student} key={student._id} elem={elem} />
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }
 

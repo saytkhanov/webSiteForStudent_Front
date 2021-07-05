@@ -34,11 +34,23 @@ export default function reducers( state= initialState, action) {
         deleting: false,
         items: state.items.filter((student) => student.id !== action.payload)
       };
-    case "student/delete/pending": // удаление началось
+    case "student/delete/pending":
       return {
         ...state,
         deleting: true,
       };
+    case "studentById/load/pending":
+      return {
+        ...state,
+        loading: true
+      }
+    case "studentById/load/fulfilled":
+      return {
+        ...state,
+        loading: false,
+        items: action.payload
+      }
+
     default:
       return state
   }
@@ -75,7 +87,6 @@ export const postStudent = (data) => {
     })
     window.location.reload()
   }
-
 }
 
 
@@ -90,5 +101,17 @@ export const deleteStudent = (id) => {
       payload: id
     })
     window.location.reload()
+  }
+}
+
+
+export const loadStudentById = (id) => {
+  return async (dispatch) => {
+    dispatch({type: "studentById/load/pending"})
+    await fetch(`http://localhost:3004/student/${id}`)
+    dispatch({
+      type: "studentById/delete/fulfilled",
+      payload: id
+    })
   }
 }

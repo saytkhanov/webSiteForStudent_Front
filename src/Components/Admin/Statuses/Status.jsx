@@ -13,10 +13,14 @@ import AddIcon from "@material-ui/icons/Add";
 
 function Status({ status, key }) {
   return (
-    <Box key={key}>
-      <Typography>{status.status}</Typography>
-      <Box>{status.color}</Box>
-    </Box>
+    <Grid container key={key} spacing={4}>
+      <Grid item lg={"6"}>
+        <Typography>{status.status}</Typography>
+      </Grid>
+      <Grid item lg={"6"}>
+        <Box bgcolor={status.color}>1</Box>
+      </Grid>
+    </Grid>
   );
 }
 

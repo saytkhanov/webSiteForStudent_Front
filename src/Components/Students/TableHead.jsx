@@ -1,20 +1,32 @@
 import React from "react";
+import { makeStyles, withStyles } from "@material-ui/core";
 import styles from "./styles.module.css";
+import { TableHead, TableRow, TableCell } from "@material-ui/core";
 
-function TableHead(props) {
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+function TableHeader(props) {
   return (
     <>
-      <thead>
-        <tr>
-          <th className={styles.th}> </th>
-          <th className={styles.th}>ФИО</th>
-          <th className={styles.th}>Последнее изменение</th>
-          <th className={styles.th}>Статус</th>
-          <th className={styles.th}>Кол-во заметок</th>
-        </tr>
-      </thead>
+      <TableHead>
+        <TableRow>
+          <StyledTableCell> </StyledTableCell>
+          <StyledTableCell>ФИО</StyledTableCell>
+          <StyledTableCell align="left">Последнее изменение</StyledTableCell>
+          <StyledTableCell align="center">Статус</StyledTableCell>
+          <StyledTableCell align="center">Кол-во заметок</StyledTableCell>
+        </TableRow>
+      </TableHead>
     </>
   );
 }
 
-export default TableHead;
+export default TableHeader;

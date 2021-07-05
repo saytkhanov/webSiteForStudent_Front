@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Modal from "@material-ui/core/Modal";
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles, TextField } from "@material-ui/core";
+import { postNote } from "../../../redux/actions/notes";
+import { useDispatch } from "react-redux";
+import { postStudent } from "../../../redux/actions/students";
+import { postStatus } from "../../../redux/actions/statuses";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -29,15 +33,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ModalsForStatus({ open, handleClose }) {
+  const [color, setColor] = useState("");
+  const [status, setStatus] = useState("");
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
 
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Добавить студента</h2>
-      <ModalsForStatus />
-    </div>
-  );
+  const handleAdd = async () => {
+    await dispatch(postStatus({ status, color }));
+  };
+
+  const handleAddColor = (e) => {
+    setColor(e.target.value);
+  };
+
+  const handleAddStatus = (e) => {
+    setStatus(e.target.value);
+  };
 
   return (
     <Modal
@@ -46,7 +58,26 @@ function ModalsForStatus({ open, handleClose }) {
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
-      {body}
+      <div style={modalStyle} className={classes.paper}>
+        <h2 id="simple-modal-title">Добавить студента</h2>
+        <form>
+          <TextField
+            name="patronymic"
+            value={status}
+            onChange={handleAddStatus}
+          />
+          <TextField
+            type="color"
+            name="avatar"
+            value={color}
+            onChange={handleAddColor}
+          />
+          <Button onClick={handleAdd} type="submit">
+            Добавить
+          </Button>
+        </form>
+        <ModalsForStatus />
+      </div>
     </Modal>
   );
 }
