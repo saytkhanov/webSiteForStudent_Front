@@ -16,6 +16,7 @@ import Note from "./Note";
 import { loadStudents } from "../../redux/actions/students";
 import { loadStatuses } from "../../redux/actions/statuses";
 import { makeStyles } from "@material-ui/core/styles";
+import Edit from "./Edit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,7 +103,7 @@ function Notes(props) {
                     variant="outlined"
                   >
                     {statuses.map((option) => (
-                      <option key={option.value} value={option._id}>
+                      <option key={option._id} value={option._id}>
                         {option.status}
                       </option>
                     ))}
@@ -122,13 +123,13 @@ function Notes(props) {
         );
       })}
       {notes.map((note) => {
-        const status = statuses.find((item) => {
+        const stat = statuses.find((item) => {
           if (item._id === note.status) {
             return item;
           }
         });
         console.log(status);
-        return <Note status={status} note={note} key={note._id} />;
+        return <Edit stat={stat} note={note} key={note._id} />;
       })}
     </Box>
   );

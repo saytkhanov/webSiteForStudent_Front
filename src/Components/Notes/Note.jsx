@@ -13,9 +13,11 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { loadStatuses } from "../../redux/actions/statuses";
+import EditIcon from "@material-ui/icons/Edit";
 import Preloader from "../Preloader";
 import { postStudent } from "../../redux/actions/students";
-import { postNote } from "../../redux/actions/notes";
+import { patchNotes, postNote } from "../../redux/actions/notes";
+import Fab from "@material-ui/core/Fab";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,13 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Note({ note, status }) {
-  const [text, setText] = useState("");
-
+function Note({ note, stat, setIsEditing }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const statuses = useSelector((state) => state.statuses.items);
-  const loading = useSelector((state) => state.statuses.loading);
+  const loading = useSelector((state) => state.notes.loading);
 
   useEffect(() => dispatch(loadStatuses()), [dispatch]);
 
@@ -55,8 +54,17 @@ function Note({ note, status }) {
 
   return (
     <>
-      <Grid>{status?.status}</Grid>
-      <Grid>{note.text}</Grid>
+      <Grid container spacing={2}>
+        <Grid item>
+          <Box bgcolor={stat?.color}>{stat?.status}</Box>
+        </Grid>
+        <Grid item>{note.text}</Grid>
+        <Grid item>
+          <Fab color="secondary" aria-label="edit">
+            <EditIcon onClick={() => setIsEditing(true)} />
+          </Fab>
+        </Grid>
+      </Grid>
     </>
   );
 }

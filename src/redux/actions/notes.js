@@ -56,15 +56,23 @@ export const loadNotes = (id) => {
   }
 }
 
-export const patchNotes = (id) => {
+export const editNote = (id, data) => {
   return async (dispatch) => {
     dispatch({type: "patchNote/load/pending" });
-    const response = await fetch(`http://localhost:3004/note/${id}`);
+    const response = await fetch(`http://localhost:3004/note/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
     const json = await response.json();
     dispatch({
       type: "patchNote/load/fulfilled",
       payload: { json, id }
     })
+    window.location.reload()
   }
 }
 
