@@ -44,19 +44,8 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 function Student({ student, key, elem }) {
-  const [have, setHave] = useState(false)
   const classes = useStyles();
-  const dispatch = useDispatch();
 
-  //
-  // const statuses = useSelector((state) => {
-  //   return state.statuses.items.filter(
-  //     (item) => item.id === student.lastNote?.status
-  //       .map(status => status)
-  //   );
-  // });
-
-  console.log(student);
   return (
     <>
       <StyledTableRow className={styles.tr} key={key}>

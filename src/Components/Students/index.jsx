@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadStudents } from "../../redux/features/students";
+import { loadStudents, selectLoadingStudents } from '../../redux/features/students'
 import Preloader from "../Preloader";
 import Student from "./Student";
 import {
@@ -17,7 +17,7 @@ import {
 import styles from "./styles.module.css";
 import { makeStyles } from "@material-ui/core/styles";
 import TableHeader from "./TableHead";
-import { loadStatuses } from "../../redux/features/statuses";
+import { loadStatuses, selectStatuses } from '../../redux/features/statuses'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,8 +43,8 @@ function Students(props) {
   // const students = state.filter((item) => {
   //   return item.firstName.toLowerCase().includes(value.toLowerCase());
   // });
-  const loading = useSelector((state) => state.students.loading);
-  const statuses = useSelector((state) => state.statuses.items);
+  const loading = useSelector(selectLoadingStudents);
+  const statuses = useSelector(selectStatuses);
 
   useEffect(() => dispatch(loadStudents()), [dispatch]);
 

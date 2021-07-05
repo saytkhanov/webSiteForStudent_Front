@@ -1,3 +1,5 @@
+
+
 const initialState = {
   items: [],
   loading: false
@@ -17,12 +19,12 @@ export default function reducers( state= initialState, action) {
         loading: false,
         items: action.payload
       }
-    case "postStatus/load/pending":
+    case "statuses/create/pending":
       return  {
         ...state,
         loading: true
       };
-    case "postStatus/load/fulfilled":
+    case "statuses/create/fulfilled":
       return {
         ...state,
         loading: false,
@@ -48,7 +50,7 @@ export const loadStatuses = () => {
 
 export const postStatus = (data) => {
   return async (dispatch) => {
-    dispatch({type: "postStatus/load/pending" });
+    dispatch({type: "statuses/create/pending" });
     const response = await fetch('http://localhost:3004/status',
         {
           method: "POST",
@@ -59,9 +61,11 @@ export const postStatus = (data) => {
         });
     const json = await response.json();
     dispatch({
-      type: "postStatus/load/fulfilled",
+      type: "statuses/create/fulfilled",
       payload: json
     })
-    window.location.reload()
   }
 }
+
+export const selectStatuses = (state) => state.statuses.items
+export const selectLoadingStatuses = (state) => state.statuses.loading;

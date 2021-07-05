@@ -13,7 +13,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@material-ui/icons/Edit";
-import { loadStatuses } from "../../redux/features/statuses";
+import { loadStatuses, selectLoadingStatuses, selectStatuses } from '../../redux/features/statuses'
 import Preloader from "../Preloader";
 import Fab from "@material-ui/core/Fab";
 import { postNote } from '../../redux/features/notes'
@@ -35,9 +35,9 @@ function Note({ note,  stat, setIsEditing }) {
   const { id} = useParams()
   const [status, setStatus] = useState("");
   const classes = useStyles();
-  const statuses = useSelector((state) => state.statuses.items);
+  const statuses = useSelector(selectStatuses);
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.statuses.loading);
+  const loading = useSelector(selectLoadingStatuses);
   useEffect(() => dispatch(loadStatuses()), [dispatch]);
 
   // const handleAdd = async (id) => {
@@ -51,17 +51,17 @@ function Note({ note,  stat, setIsEditing }) {
   // const handleChangeStatus = (e) => {
   //   setStatus(e.target.value);
   // };
-  const handleAdd = async (id) => {
-    await dispatch(postNote(id, { text, status }));
-  };
-
-  const handleChangeComment = (e) => {
-    setText(e.target.value);
-  };
-
-  const handleChangeStatus = (e) => {
-    setStatus(e.target.value);
-  };
+  // const handleAdd = async (id) => {
+  //   await dispatch(postNote(id, { text, status }));
+  // };
+  //
+  // const handleChangeComment = (e) => {
+  //   setText(e.target.value);
+  // };
+  //
+  // const handleChangeStatus = (e) => {
+  //   setStatus(e.target.value);
+  // };
 
   if (loading) {
     return <Preloader />;

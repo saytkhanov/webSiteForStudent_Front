@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadStatuses } from "../../redux/features/statuses";
-import { editNote } from "../../redux/features/notes";
+import { editNote, selectEditingNotes } from '../../redux/features/notes'
 import Preloader from "../Preloader";
 import { Box, Grid, TextField } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
@@ -32,6 +32,8 @@ function NoteWithInputs({ stat, note, key, setIsEditing }) {
     // и затем переключаемся на компонент
     setIsEditing(false);
   };
+
+  const editing = useSelector(selectEditingNotes)
   // const handleAdd = async (id) => {
   //   await dispatch(postNote(id, { text, status }));
   // };
@@ -81,10 +83,10 @@ function NoteWithInputs({ stat, note, key, setIsEditing }) {
         </Grid>
         <Grid item>
           <Fab color="secondary" aria-label="edit">
-            <button type="submit" onClick={handleEdit} value="Save" />
+            <button type="submit" onClick={handleEdit} disabled={editing} value="Save" />
           </Fab>
           <Fab color="secondary" aria-label="edit">
-            <EditIcon onClick={() => setIsEditing(false)} />
+            <EditIcon  onClick={() => setIsEditing(false)} />
           </Fab>
         </Grid>
       </Grid>

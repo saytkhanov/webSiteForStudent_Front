@@ -3,7 +3,8 @@ import React from 'react'
 
 const initialState = {
   items: [],
-  loading: false
+  loading: false,
+  editing: false
 }
 
 
@@ -20,23 +21,23 @@ export default function reducers( state= initialState, action) {
         loading: false,
         items: action.payload
       }
-    case "note/create/pending":
+    case "notes/create/pending":
       return {
         ...state,
         loading: true
       }
-    case "note/create/fulfilled":
+    case "notes/create/fulfilled":
       return {
         ...state,
         loading: false,
-        items: action.payload
+        items: [...state.items, action.payload]
       }
-    case "patchNotes/load/pending":
+    case "notes/edit/pending":
       return  {
         ...state,
         loading: true
       };
-    case "patchNotes/load/fulfilled":
+    case "note/edit/fulfilled":
       return {
         ...state,
         loading: false,
@@ -72,7 +73,7 @@ export const loadNotes = (id) => {
 
 export const editNote = (id, data) => {
   return async (dispatch) => {
-    dispatch({type: "patchNote/load/pending" });
+    dispatch({type: "notes/edit/pending" });
     const response = await fetch(`http://localhost:3004/note/${id}`,
       {
         method: "PATCH",
@@ -83,16 +84,15 @@ export const editNote = (id, data) => {
       });
     const json = await response.json();
     dispatch({
-      type: "patchNote/load/fulfilled",
+      type: "notes/edit/fulfilled",
       payload: { json, id }
     })
-    window.location.reload()
   }
 }
 
 export const postNote = (id, data) => {
   return async (dispatch) => {
-    dispatch({type: "postNote/load/pending" });
+    dispatch({type: "notes/edit/pending" });
     const response = await fetch(`http://localhost:3004/student/${id}/note`,
       {
         method: "POST",
@@ -103,14 +103,16 @@ export const postNote = (id, data) => {
       });
     const json = await response.json();
     dispatch({
-      type: "patchNote/load/fulfilled",
+      type: "notes/edit/fulfilled",
       payload: { json, id }
     })
-    window.location.reload()
   }
 }
 
 
+export const selectNotes = (state) => state.notes.items;
+export const selectLoadingNotes = (state) => state.notes.loading
+export const selectEditingNotes = (state) => state.notes.deleting
 
 // <Grid container spacing={4}>
 //   <Grid item>

@@ -1,6 +1,7 @@
 const initialState = {
   items: [],
   loading: false,
+  deleting: false
 };
 
 export default function reducers(state = initialState, action) {
@@ -16,40 +17,28 @@ export default function reducers(state = initialState, action) {
         loading: false,
         items: action.payload,
       };
-    case "student/create/pending":
+    case "students/create/pending":
       return {
         ...state,
         loading: true,
       };
-    case "student/create/fulfilled":
+    case "students/create/fulfilled":
       return {
         ...state,
         loading: false,
         items: [...state.items, action.payload],
       };
-    case "student/delete/fulfilled": // удаление началось
+    case "students/remove/fulfilled": // удаление началось
       return {
         ...state,
         deleting: false,
         items: state.items.filter((student) => student.id !== action.payload),
       };
-    case "student/delete/pending":
+    case "students/remove/pending":
       return {
         ...state,
         deleting: true,
       };
-    case "studentById/load/pending":
-      return {
-        ...state,
-        loading: true,
-      };
-    case "studentById/load/fulfilled":
-      return {
-        ...state,
-        loading: false,
-        items: action.payload,
-      };
-
     default:
       return state;
   }
@@ -69,7 +58,7 @@ export const loadStudents = () => {
 
 export const createStudent = (data) => {
   return async (dispatch) => {
-    dispatch({ type: "student/create/pending" });
+    dispatch({ type: "students/create/pending" });
     const response = await fetch("http://localhost:3004", {
       method: "POST",
       headers: {
@@ -79,33 +68,25 @@ export const createStudent = (data) => {
     });
     const json = await response.json();
     dispatch({
-      type: "student/create/fulfilled",
+      type: "students/create/fulfilled",
       payload: json,
-    });
+    })
   };
 };
 
 export const deleteStudent = (id) => {
   return async (dispatch) => {
-    dispatch({ type: "student/delete/pending" });
+    dispatch({ type: "students/remove/pending" });
     await fetch(`http://localhost:3004/student/${id}`, {
       method: "DELETE",
     });
     dispatch({
-      type: "student/delete/fulfilled",
+      type: "students/remove/fulfilled",
       payload: id,
     });
-    window.location.reload();
   };
 };
 
-export const loadStudentById = (id) => {
-  return async (dispatch) => {
-    dispatch({ type: "studentById/load/pending" });
-    await fetch(`http://localhost:3004/student/${id}`);
-    dispatch({
-      type: "studentById/delete/fulfilled",
-      payload: id,
-    });
-  };
-};
+export const selectStudents = (state) => state.students.items;
+export const selectLoadingStudents = (state) => state.students.loading
+export const selectDeletingStudents = (state) => state.students.deleting

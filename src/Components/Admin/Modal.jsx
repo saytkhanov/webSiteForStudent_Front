@@ -64,7 +64,9 @@ function Modals({ open, handleClose }) {
         patronymic,
         avatar,
       })
-    );
+    ).then(() => {
+      handleClose()
+    })
   };
 
   return (

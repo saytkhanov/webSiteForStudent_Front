@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Grid, Typography } from "@material-ui/core";
-import { useDispatch } from "react-redux";
-import { deleteStudent } from "../../redux/features/students";
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteStudent, selectDeletingStudents } from '../../redux/features/students'
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 function Student({ student, key }) {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const deleting = useSelector(selectDeletingStudents)
 
   return (
     <Grid key={key} classes={{ root: classes.root }}>
@@ -38,6 +39,7 @@ function Student({ student, key }) {
         <Button
           color={"secondary"}
           variant={"contained"}
+          disabled={deleting}
           onClick={() => dispatch(deleteStudent(student._id))}
         >
           Удалить

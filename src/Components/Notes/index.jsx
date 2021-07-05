@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../Preloader";
-import { loadNotes, postNote } from "../../redux/features/notes";
+import { loadNotes, postNote, selectLoadingNotes, selectNotes } from '../../redux/features/notes'
 import { useParams } from "react-router-dom";
 import Note from "./Note";
 import { loadStudents } from "../../redux/features/students";
@@ -68,8 +68,8 @@ function Notes(props) {
     setStatus(e.target.value);
   };
   // });
-  const notes = useSelector((state) => state.notes.items);
-  const loading = useSelector((state) => state.notes.loading);
+  const notes = useSelector(selectNotes);
+  // const loading = useSelector(selectLoadingNotes);
   // const students = useSelector((state) => {
   //   return state.students.items.find(stud => stud._id === id)
   // });
@@ -77,9 +77,9 @@ function Notes(props) {
 
   useEffect(() => dispatch(loadNotes(id)), [dispatch]);
 
-  if (loading) {
-    return <Preloader />;
-  }
+  // if (loading) {
+  //   return <Preloader />;
+  // }
 
   return (
     <Box>
