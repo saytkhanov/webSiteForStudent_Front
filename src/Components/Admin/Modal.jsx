@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Modal from "@material-ui/core/Modal";
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { postStudent } from "../../redux/actions/students";
-import { loadStatuses } from "../../redux/actions/statuses";
+import { createStudent, postStudent } from '../../redux/features/students'
+import { loadStatuses } from "../../redux/features/statuses";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -56,9 +56,9 @@ function Modals({ open, handleClose }) {
     setAvatar(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleAddStudent = (e) => {
     dispatch(
-      postStudent({
+      createStudent({
         firstName,
         lastName,
         patronymic,
@@ -76,7 +76,7 @@ function Modals({ open, handleClose }) {
     >
       <div style={modalStyle} className={classes.paper}>
         <h2 id="simple-modal-title">Добавить студента</h2>
-        <form onSubmit={handleSubmit}>
+        <form>
           <TextField
             name="firstName"
             value={firstName}
@@ -93,7 +93,7 @@ function Modals({ open, handleClose }) {
             onChange={handleAddPatronymic}
           />
           <TextField name="avatar" value={avatar} onChange={handleAddAvatar} />
-          <Button type="submit">Добавить</Button>
+          <Button onClick={handleAddStudent} type="submit">Добавить</Button>
         </form>
         <Modals />
       </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadStudents } from "../../redux/actions/students";
+import { loadStudents } from "../../redux/features/students";
 import Preloader from "../Preloader";
 import Student from "./Student";
 import {
@@ -17,7 +17,7 @@ import {
 import styles from "./styles.module.css";
 import { makeStyles } from "@material-ui/core/styles";
 import TableHeader from "./TableHead";
-import { loadStatuses } from "../../redux/actions/statuses";
+import { loadStatuses } from "../../redux/features/statuses";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,13 +33,16 @@ function Students(props) {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(false);
   const dispatch = useDispatch();
-  const state = useSelector((state) => {
-    return state.students.items.map((item) => item);
-  });
+  const students = useSelector((state) => {
+    return state.students.items
+      .map((item) => item)
+      .filter((item) => {
+      return item.firstName.toLowerCase().includes(value.toLowerCase())
+  })});
 
-  const students = state.filter((item) => {
-    return item.firstName.toLowerCase().includes(value.toLowerCase());
-  });
+  // const students = state.filter((item) => {
+  //   return item.firstName.toLowerCase().includes(value.toLowerCase());
+  // });
   const loading = useSelector((state) => state.students.loading);
   const statuses = useSelector((state) => state.statuses.items);
 
@@ -99,9 +102,9 @@ function Students(props) {
             {students.map((student) => {
               const elem = statuses.find((item) => {
                 if (item._id === student.lastNote?.status) {
-                  return item;
+                  return item
                 }
-                return item;
+                return null
               });
 
               return (

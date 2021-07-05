@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadStudents } from "../../redux/actions/students";
+import { loadStudents } from "../../redux/features/students";
 import {
   Box,
   Button,

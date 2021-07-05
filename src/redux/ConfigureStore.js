@@ -1,9 +1,9 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import {createLogger} from 'redux-logger/src';
-import studentsReducer from './actions/students';
-import notesReducer from './actions/notes';
-import statusesReducer from  './actions/statuses'
+import studentsReducer from './features/students';
+import notesReducer from './features/notes';
+import statusesReducer from './features/statuses'
 
 
 const logger = createLogger({

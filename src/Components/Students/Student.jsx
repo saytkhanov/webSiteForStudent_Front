@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Container,
@@ -17,7 +17,7 @@ import styles from "./styles.module.css";
 import Notes from "../Notes";
 import { NavLink } from "react-router-dom";
 import dayjs from "dayjs";
-import { loadStatuses } from "../../redux/actions/statuses";
+import { loadStatuses } from "../../redux/features/statuses";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +44,7 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 function Student({ student, key, elem }) {
+  const [have, setHave] = useState(false)
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -74,7 +75,7 @@ function Student({ student, key, elem }) {
         <StyledTableCell className={styles.td}>
           {dayjs(student.lastNote?.createdAt).format("YY.MM.DD HH:mm")}
         </StyledTableCell>
-        <TableCell bgcolor={elem?.color}>{elem?.status}</TableCell>
+          <StyledTableCell bgcolor={elem?.color}>{elem?.status}</StyledTableCell>
         <StyledTableCell className={styles.td}>
           {student.notes.length}
         </StyledTableCell>

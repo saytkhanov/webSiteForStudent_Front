@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Modal from "@material-ui/core/Modal";
 import { Button, makeStyles, TextField } from "@material-ui/core";
-import { postNote } from "../../../redux/actions/notes";
+import { postNote } from "../../../redux/features/notes";
 import { useDispatch } from "react-redux";
-import { postStudent } from "../../../redux/actions/students";
-import { postStatus } from "../../../redux/actions/statuses";
+import { postStudent } from "../../../redux/features/students";
+import { postStatus } from "../../../redux/features/statuses";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;

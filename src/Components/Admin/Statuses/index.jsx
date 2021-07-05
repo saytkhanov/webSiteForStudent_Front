@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadStatuses } from "../../../redux/actions/statuses";
+import { loadStatuses } from "../../../redux/features/statuses";
 import Status from "./Status";
 import { Grid } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";

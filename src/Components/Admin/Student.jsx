@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Grid, Typography } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { deleteStudent } from "../../redux/actions/students";
+import { deleteStudent } from "../../redux/features/students";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadStatuses } from "../../redux/actions/statuses";
-import { editNote } from "../../redux/actions/notes";
+import { loadStatuses } from "../../redux/features/statuses";
+import { editNote } from "../../redux/features/notes";
 import Preloader from "../Preloader";
 import { Box, Grid, TextField } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
@@ -9,7 +9,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import CachedTwoToneIcon from "@material-ui/icons/CachedTwoTone";
 
 function NoteWithInputs({ stat, note, key, setIsEditing }) {
-  const [status, setStatus] = useState(stat?.status);
+  const [status, setStatus] = useState();
   const [text, setText] = useState(note.text);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.notes.loading);
@@ -29,7 +29,7 @@ function NoteWithInputs({ stat, note, key, setIsEditing }) {
     // ждем пока выполнится диспетч...
     await dispatch(editNote(note._id, { status, text }));
 
-    // и затем переключаемся на компонент TableRowReadOnly
+    // и затем переключаемся на компонент
     setIsEditing(false);
   };
   // const handleAdd = async (id) => {
@@ -81,7 +81,7 @@ function NoteWithInputs({ stat, note, key, setIsEditing }) {
         </Grid>
         <Grid item>
           <Fab color="secondary" aria-label="edit">
-            <CachedTwoToneIcon onClick={handleEdit} />
+            <button type="submit" onClick={handleEdit} value="Save" />
           </Fab>
           <Fab color="secondary" aria-label="edit">
             <EditIcon onClick={() => setIsEditing(false)} />
