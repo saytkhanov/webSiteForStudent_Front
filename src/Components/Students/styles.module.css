@@ -1,18 +1,8 @@
 .table {
     width: 1230px;
-    margin-top: 20px;
-}
-.td {
-    text-align: center;
-}
-.tr {
-    height: 100px;
 }
 .a {
     font-weight: bold;
-    color: darkblue;
-    font-size: 25px;
-}
-.th {
-    font-size: 20px;
+    color: #4c4dc3;
+    font-size: 22px;
 }

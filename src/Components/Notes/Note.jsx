@@ -6,19 +6,17 @@ import {
   Grid,
   InputLabel,
   MenuItem,
-  Select,
+  Select, Table, TableCell, TableRow,
   TextField,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@material-ui/icons/Edit";
 import { loadStatuses, selectLoadingStatuses, selectStatuses } from '../../redux/features/statuses'
-import Preloader from "../Preloader";
+
 import Fab from "@material-ui/core/Fab";
-import { postNote } from '../../redux/features/notes'
-import { useParams } from 'react-router-dom'
-import { loadStudents } from '../../redux/features/students'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,59 +26,43 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
+  tr: {
+    height: 80
+  },
+  status: {
+    height: 40,
+    width: 200,
+    color: "white",
+    textAlign: 'center',
+    borderRadius: 4,
+    lineHeight: "40px",
+    fontSize: 16
+  },
 }));
 
 function Note({ note,  stat, setIsEditing }) {
-  const [text, setText] = useState("");
-  const { id} = useParams()
-  const [status, setStatus] = useState("");
   const classes = useStyles();
-  const statuses = useSelector(selectStatuses);
   const dispatch = useDispatch();
   const loading = useSelector(selectLoadingStatuses);
   useEffect(() => dispatch(loadStatuses()), [dispatch]);
 
-  // const handleAdd = async (id) => {
-  //   await dispatch(postNote(id, { text, status }));
-  // };
-  //
-  // const handleChangeComment = (e) => {
-  //   setText(e.target.value);
-  // };
-  //
-  // const handleChangeStatus = (e) => {
-  //   setStatus(e.target.value);
-  // };
-  // const handleAdd = async (id) => {
-  //   await dispatch(postNote(id, { text, status }));
-  // };
-  //
-  // const handleChangeComment = (e) => {
-  //   setText(e.target.value);
-  // };
-  //
-  // const handleChangeStatus = (e) => {
-  //   setStatus(e.target.value);
-  // };
 
-  if (loading) {
-    return <Preloader />;
-  }
 
   return (
-    <>
-      <Grid container spacing={2}>
-        <Grid item>
-          <Box bgcolor={stat?.color}>{stat?.status}</Box>
-        </Grid>
-        <Grid item>{note.text}</Grid>
-        <Grid item>
-          <Fab color="secondary" aria-label="edit">
-            <EditIcon onClick={() => setIsEditing(true)} />
+      <TableRow classes={{ root: classes.tr }}>
+        <TableCell style={{ width: 120}}>
+          <Box bgcolor={stat?.color} classes={{ root: classes.status }}>{stat?.status}</Box>
+        </TableCell>
+        <TableCell style={{fontSize: 18}} item>{note.text}</TableCell>
+        <TableCell style={{width: 150, textAlign: 'center'}}>
+          <Fab style={{backgroundColor: '#4c4dc3',
+
+          color: 'white'
+          }} aria-label="edit" onClick={() => setIsEditing(true)}>
+            <EditIcon  />
           </Fab>
-        </Grid>
-      </Grid>
-    </>
+        </TableCell>
+      </TableRow>
   );
 }
 

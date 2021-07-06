@@ -1,58 +1,54 @@
-import React, { useEffect, useState } from 'react'
+import React from "react";
 import {
-  Box,
-  Container,
-  Paper,
-  Toolbar,
-  Typography,
-  Button,
-  Grid,
   TableCell,
-  withStyles,
   TableRow,
+  Box,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles.module.css";
-import Notes from "../Notes";
 import { NavLink } from "react-router-dom";
 import dayjs from "dayjs";
-import { loadStatuses } from "../../redux/features/statuses";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  th: {
+    fontSize: 20,
+  },
+  tr: {
+    height: 100,
+  },
+  td: {
+    textAlign: "center",
+    color: "#4c4dc3",
+    fontSize: 22,
+  },
+  status: {
+    height: 40,
+    color: "white",
+    textAlign: 'center',
+    borderRadius: 4,
+    lineHeight: "40px",
+    fontSize: 16
+  },
 }));
-
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
 
 function Student({ student, key, elem }) {
   const classes = useStyles();
 
   return (
     <>
-      <StyledTableRow className={styles.tr} key={key}>
-        <StyledTableCell>
-          <img src={student.avatar} alt={"avatar"} width="100px" />
-        </StyledTableCell>
-        <StyledTableCell className={styles.td}>
+      <TableRow classes={{ root: classes.tr }} key={key}>
+        <TableCell>
+          <img
+            src={student.avatar}
+            alt={"avatar"}
+            width="100px"
+            style={{ borderRadius: 100 }}
+          />
+        </TableCell>
+        <TableCell classes={{ root: classes.th }}>
           <NavLink
             student={student}
             to={`/student/${student._id}/note`}
@@ -60,15 +56,19 @@ function Student({ student, key, elem }) {
           >
             {student.firstName} {student.lastName} {student.patronymic}
           </NavLink>
-        </StyledTableCell>
-        <StyledTableCell className={styles.td}>
-          {dayjs(student.lastNote?.createdAt).format("YY.MM.DD HH:mm")}
-        </StyledTableCell>
-          <StyledTableCell bgcolor={elem?.color}>{elem?.status}</StyledTableCell>
-        <StyledTableCell className={styles.td}>
+        </TableCell>
+        <TableCell classes={{ root: classes.td }}>
+          {dayjs(student.lastNote?.createdAt).format("DD.MM.YY   HH:mm")}
+        </TableCell>
+        <TableCell>
+          <Box bgcolor={elem?.color} classes={{ root: classes.status }}>
+            {elem?.status}
+          </Box>
+        </TableCell>
+        <TableCell classes={{ root: classes.td }}>
           {student.notes.length}
-        </StyledTableCell>
-      </StyledTableRow>
+        </TableCell>
+      </TableRow>
     </>
   );
 }

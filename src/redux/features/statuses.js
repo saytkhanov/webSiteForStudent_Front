@@ -1,5 +1,3 @@
-
-
 const initialState = {
   items: [],
   loading: false

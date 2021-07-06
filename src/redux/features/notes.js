@@ -1,6 +1,3 @@
-import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
-import React from 'react'
-
 const initialState = {
   items: [],
   loading: false,
@@ -35,19 +32,17 @@ export default function reducers( state= initialState, action) {
     case "notes/edit/pending":
       return  {
         ...state,
-        loading: true
+        editing: true
       };
-    case "note/edit/fulfilled":
+    case "notes/edit/fulfilled":
       return {
         ...state,
-        loading: false,
-        items: state.notes.map((item) => {
-          if(item.id === action.payload) {
+        editing: false,
+        items: state.items.map((item) => {
+          if(item.id === action.payload.id) {
             return {
               ...item,
-              firstName: item.firstName,
-              lastName: item.lastName,
-              patronymic: item.patronymic
+              ...action.payload.data
             }
           }
           return item
@@ -74,7 +69,7 @@ export const loadNotes = (id) => {
 export const editNote = (id, data) => {
   return async (dispatch) => {
     dispatch({type: "notes/edit/pending" });
-    const response = await fetch(`http://localhost:3004/note/${id}`,
+      await fetch(`http://localhost:3004/note/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -82,17 +77,16 @@ export const editNote = (id, data) => {
         },
         body: JSON.stringify(data),
       });
-    const json = await response.json();
     dispatch({
       type: "notes/edit/fulfilled",
-      payload: { json, id }
+      payload: { data, id }
     })
   }
 }
 
 export const postNote = (id, data) => {
   return async (dispatch) => {
-    dispatch({type: "notes/edit/pending" });
+    dispatch({type: "notes/create/pending" });
     const response = await fetch(`http://localhost:3004/student/${id}/note`,
       {
         method: "POST",
@@ -101,9 +95,9 @@ export const postNote = (id, data) => {
         },
         body: JSON.stringify(data),
       });
-    const json = await response.json();
+    const json = await response.json()
     dispatch({
-      type: "notes/edit/fulfilled",
+      type: "notes/create/fulfilled",
       payload: { json, id }
     })
   }
@@ -112,63 +106,5 @@ export const postNote = (id, data) => {
 
 export const selectNotes = (state) => state.notes.items;
 export const selectLoadingNotes = (state) => state.notes.loading
-export const selectEditingNotes = (state) => state.notes.deleting
+export const selectEditingNotes = (state) => state.notes.editing
 
-// <Grid container spacing={4}>
-//   <Grid item>
-//     <img src={student.avatar} width="220px" />
-//   </Grid>
-//   <Grid item>
-//     <Box>
-//       <Typography variant={"h4"} color={"primary"}>
-//         {student.firstName} {student.lastName}
-//       </Typography>
-//       <Typography variant={"h4"} color={"primary"}>
-//         {student.patronymic}
-//       </Typography>
-//     </Box>
-//   </Grid>
-// </Grid>
-// <Grid container spacing={4}>
-//   <Grid item>
-//     <form>
-//       <TextField
-//         classes={{ root: classes.root }}
-//         placeholder="Комментарий"
-//         name="text"
-//         value={text}
-//         onChange={handleChangeComment}
-//       />
-//       <TextField
-//         id="outlined-select-currency-native"
-//         select
-//         label="Native select"
-//         name="status"
-//         value={status}
-//         onChange={handleChangeStatus}
-//         SelectProps={{
-//           native: true,
-//         }}
-//         helperText="Please select your currency"
-//         variant="outlined"
-//       >
-//         {statuses.map((option) => (
-//           <option key={option._id} value={option._id}>
-//             {option.status}
-//           </option>
-//         ))}
-//       </TextField>
-//       <Box>
-//         <Button
-//           onClick={() => handleAdd(student._id)}
-//           type="submit"
-//         >
-//           Добавить
-//         </Button>
-//       </Box>
-//     </form>
-//   </Grid>
-// </Grid>
-// </>
-// );
-// })}

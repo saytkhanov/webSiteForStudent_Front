@@ -14,7 +14,11 @@ import {useLocation} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    color: '#4c4dc3'
   },
+  header: {
+    height: 80
+  }
 }));
 
 function Header() {
@@ -24,12 +28,12 @@ function Header() {
 
 
   return (
-    <Container maxWidth={"lg"}>
+    <Container fixed maxWidth={"lg"}>
       <Paper elevation={5}>
-        <Toolbar variant={"regular"}>
+        <Toolbar classes={{root: classes.header}} variant={"regular"}>
           <Typography
-            color={"secondary"}
-            variant={"h5"}
+            color={"primary"}
+            variant={"h4"}
             classes={{ root: classes.root }}
           >
             BootCamp-Students

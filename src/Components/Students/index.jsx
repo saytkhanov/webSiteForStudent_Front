@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadStudents, selectLoadingStudents } from '../../redux/features/students'
+import {
+  loadStudents,
+  selectLoadingStudents,
+} from "../../redux/features/students";
 import Preloader from "../Preloader";
 import Student from "./Student";
 import {
   Box,
   Button,
   Container,
+  Grid,
   Paper,
   Table,
   TableBody,
@@ -17,14 +21,14 @@ import {
 import styles from "./styles.module.css";
 import { makeStyles } from "@material-ui/core/styles";
 import TableHeader from "./TableHead";
-import { loadStatuses, selectStatuses } from '../../redux/features/statuses'
+import { loadStatuses, selectStatuses } from "../../redux/features/statuses";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  input: {
-    width: 1182,
+  tableContainer: {
+    marginTop: 30,
   },
 }));
 
@@ -37,12 +41,10 @@ function Students(props) {
     return state.students.items
       .map((item) => item)
       .filter((item) => {
-      return item.firstName.toLowerCase().includes(value.toLowerCase())
-  })});
+        return item.firstName.toLowerCase().includes(value.toLowerCase());
+      });
+  });
 
-  // const students = state.filter((item) => {
-  //   return item.firstName.toLowerCase().includes(value.toLowerCase());
-  // });
   const loading = useSelector(selectLoadingStudents);
   const statuses = useSelector(selectStatuses);
 
@@ -64,47 +66,63 @@ function Students(props) {
   return (
     <Container>
       {search ? (
-        <Box>
-          <Typography color="primary" variant="h5">
-            Поиск студента
-          </Typography>
-          <Button
-            color={"primary"}
-            variant={"outlined"}
-            onClick={handleChangeFalse}
-          >
-            Скрыть фильтр
-          </Button>
+        <>
+          <Box style={{ marginTop: 10 }}>
+            <Typography
+              color="primary"
+              variant="h4"
+              style={{ marginBottom: 12 }}
+            >
+              Поиск студента
+            </Typography>
+            <Button
+              color={"primary"}
+              variant={"contained"}
+              onClick={handleChangeFalse}
+            >
+              Скрыть фильтр
+            </Button>
+          </Box>
           <TextField
             placeholder={"Поиск по имени..."}
             onChange={(e) => setValue(e.target.value)}
-            classes={{ root: classes.input }}
+            variant={"outlined"}
+            style={{ paddingLeft: 8 }}
+            margin="normal"
+            multiline
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
-        </Box>
+        </>
       ) : (
-        <Box>
-          <Typography color="primary" variant="h5">
+        <Box style={{ marginTop: 10 }}>
+          <Typography style={{ marginBottom: 12 }} color="primary" variant="h4">
             Поиск студента
           </Typography>
           <Button
             color={"primary"}
-            variant={"outlined"}
+            variant={"contained"}
             onClick={handleChangeTrue}
           >
             Показать фильтр
           </Button>
         </Box>
       )}
-      <TableContainer component={Paper}>
+      <TableContainer
+        classes={{ root: classes.tableContainer }}
+        component={Paper}
+      >
         <Table className={styles.table}>
           <TableHeader />
           <TableBody>
             {students.map((student) => {
               const elem = statuses.find((item) => {
                 if (item._id === student.lastNote?.status) {
-                  return item
+                  return item;
                 }
-                return null
+                return null;
               });
 
               return (

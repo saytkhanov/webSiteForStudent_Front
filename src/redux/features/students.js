@@ -64,7 +64,7 @@ export const createStudent = (data) => {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     const json = await response.json();
     dispatch({

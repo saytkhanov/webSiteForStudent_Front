@@ -3,26 +3,18 @@ import { makeStyles, withStyles } from "@material-ui/core";
 import styles from "./styles.module.css";
 import { TableHead, TableRow, TableCell } from "@material-ui/core";
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
+
 
 function TableHeader(props) {
   return (
     <>
-      <TableHead>
+      <TableHead style={{backgroundColor: '#4c4dc3', height: 70}}>
         <TableRow>
-          <StyledTableCell> </StyledTableCell>
-          <StyledTableCell>ФИО</StyledTableCell>
-          <StyledTableCell align="left">Последнее изменение</StyledTableCell>
-          <StyledTableCell align="center">Статус</StyledTableCell>
-          <StyledTableCell align="center">Кол-во заметок</StyledTableCell>
+          <TableCell style={{color: 'white', fontSize: 18}}> </TableCell>
+          <TableCell style={{color: 'white', fontSize: 18}}>ФИО</TableCell>
+          <TableCell style={{color: 'white', fontSize: 18}} align="center">Последнее изменение</TableCell>
+          <TableCell style={{color: 'white', fontSize: 18}} align="center">Статус</TableCell>
+          <TableCell style={{color: 'white', fontSize: 18}} align="center">Заметки</TableCell>
         </TableRow>
       </TableHead>
     </>
