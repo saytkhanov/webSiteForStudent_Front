@@ -15,7 +15,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     fontSize: 30,
     color: '#4c4dc3',
-    fontWeight: "bold"
+    fontWeight: "bold",
+    '&:hover': {
+      textDecoration: 'none'
+    }
   },
   header: {
     height: 80,
@@ -28,7 +31,12 @@ const useStyles = makeStyles((theme) => ({
     color: '#4c4dc3',
     fontSize: 21,
     width: '120px',
-    borderRadius: 5
+    borderRadius: 5,
+    '&:hover': {
+      textDecoration: 'none',
+      backgroundColor: '#4c4dc3',
+      color: 'white'
+    }
   },
   active: {
     backgroundColor: '#4c4dc3',
