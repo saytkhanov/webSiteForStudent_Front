@@ -3,6 +3,7 @@ import Modal from "@material-ui/core/Modal";
 import { Box, Button, makeStyles, TextField, Typography } from '@material-ui/core'
 import { useDispatch } from "react-redux";
 import { createStudent} from '../../redux/features/students'
+import { Helmet } from 'react-helmet'
 
 
 

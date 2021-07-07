@@ -16,6 +16,7 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Modals from "./Modal";
 import styles from '../Students/styles.module.css'
+import { Helmet } from 'react-helmet'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -128,6 +129,11 @@ function StudentsAdmin(props) {
       <Grid item>
         {open ? <Modals open={open} handleClose={handleClose} /> : null}
       </Grid>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Admin</title>
+        <link rel="canonical" href="http://localhost:3000/" />
+      </Helmet>
     </Container>
   );
 }

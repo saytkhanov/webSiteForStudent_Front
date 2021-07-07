@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core";
 import Fab from '@material-ui/core/Fab'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { NavLink } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 const useStyles = makeStyles((theme) => ({
   root: {

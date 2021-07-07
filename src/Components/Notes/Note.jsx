@@ -9,6 +9,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { loadStatuses} from '../../redux/features/statuses'
 
 import Fab from "@material-ui/core/Fab";
+import { Helmet } from 'react-helmet'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +55,13 @@ function Note({ note,  stat, setIsEditing }) {
             <EditIcon  />
           </Fab>
         </TableCell>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Заметки</title>
+          <link rel="canonical" href="http://localhost:3000/" />
+        </Helmet>
       </TableRow>
+
   );
 }
 

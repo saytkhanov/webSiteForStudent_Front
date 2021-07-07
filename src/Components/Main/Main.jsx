@@ -7,6 +7,7 @@ import Notes from '../Notes';
 import StudentsAdmin from '../Admin'
 import Info from '../InfoAboutCompany'
 import Statuses from '../Admin/Statuses'
+import { Helmet } from 'react-helmet'
 
 const useStyles = makeStyles((theme) => ({
   root: {

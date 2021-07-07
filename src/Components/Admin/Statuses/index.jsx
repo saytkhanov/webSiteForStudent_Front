@@ -8,6 +8,7 @@ import AddIcon from "@material-ui/icons/Add";
 import {makeStyles} from '@material-ui/core'
 import styles from '../../Students/styles.module.css'
 import ServerModal from './Modals'
+import { Helmet } from 'react-helmet'
 
 const useStyles = makeStyles((theme) => ({
   add: {
@@ -51,6 +52,11 @@ function Statuses(props) {
         ) : null}
       </Grid>
       </TableBody>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Статусы</title>
+        <link rel="canonical" href="http://localhost:3000/" />
+      </Helmet>
     </Table>
   );
 }

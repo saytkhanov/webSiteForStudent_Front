@@ -6,6 +6,7 @@ import { TableCell, TableRow, TextField } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import { makeStyles } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
+import { Helmet } from 'react-helmet'
 
 const useStyles = makeStyles((theme) => ({
   tr: {
@@ -92,6 +93,11 @@ function NoteWithInputs({ note, key, setIsEditing }) {
             <SaveIcon />
           </Fab>
         </TableCell>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Редактирование</title>
+          <link rel="canonical" href="http://localhost:3000/" />
+        </Helmet>
       </TableRow>
     </>
   );

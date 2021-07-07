@@ -4,6 +4,7 @@ import {
   makeStyles, TableCell, TableRow,
   Typography,
 } from '@material-ui/core'
+import { Helmet } from 'react-helmet'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +27,11 @@ function Status({ status, key }) {
     <TableCell style={{width: 150, textAlign: 'center'}}>
       <Box bgcolor={status.color} style={{borderRadius: 100, width: 60, height: 60}}/>
     </TableCell>
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Статусы</title>
+      <link rel="canonical" href="http://localhost:3000/" />
+    </Helmet>
   </TableRow>
   );
 }
