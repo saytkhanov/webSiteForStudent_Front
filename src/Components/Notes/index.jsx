@@ -54,6 +54,8 @@ function Notes(props) {
 
   useEffect(() => dispatch(loadStatuses()), [dispatch]);
   useEffect(() => dispatch(loadStudents(id)), [dispatch]);
+  //ищем сравнение с помощью find, что бы мы при выводе могли вывести студента,
+  //которые относится к данным комментам, и с помощью константы получаем 1 раз его данные
   const students = useSelector((state) => {
     return state.students.items.find((item) => item._id === id);
   });

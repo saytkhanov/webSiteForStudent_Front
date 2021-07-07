@@ -24,6 +24,7 @@ import { loadStatuses, selectStatuses } from "../../redux/features/statuses";
 import Fuse from 'fuse.js';
 import { Helmet } from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Search from './Search'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -113,6 +114,9 @@ function Students(props) {
               <Table className={styles.table}>
             <TableBody>
               {studentsResult.map((student) => {
+                //делаем сравнение есть ли у студентов статус,
+                //который совпадает со статусом, в заметках,
+                //если да выводим с помощью константы
                 const elem = statuses.find((item) => {
                   if (item._id === student.lastNote?.status) {
                     return item;
@@ -154,7 +158,11 @@ function Students(props) {
         <Table className={styles.table}>
         <TableHeader />
         <TableBody>
+
       {students.map((student) => {
+        //делаем сравнение есть ли у студентов статус,
+        //который совпадает со статусом, в заметках,
+        //если да выводим с помощью константы
         const elem = statuses.find((item) => {
         if (item._id === student.lastNote?.status) {
         return item;
@@ -163,7 +171,7 @@ function Students(props) {
       });
 
         return (
-        <Student student={student} key={student._id} elem={elem} />
+        <Search student={student} key={student._id} elem={elem} />
         );
       })}
         </TableBody>
