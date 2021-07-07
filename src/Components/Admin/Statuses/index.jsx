@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadStatuses } from "../../../redux/features/statuses";
+import { loadStatuses, selectStatuses } from '../../../redux/features/statuses'
 import Status from "./Status";
-import { Grid } from "@material-ui/core";
+import { Grid, Table, TableBody } from '@material-ui/core'
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import ModalsForStatus from "./Modals";
+import {makeStyles} from '@material-ui/core'
+import styles from '../../Students/styles.module.css'
+import ServerModal from './Modals'
+
+const useStyles = makeStyles((theme) => ({
+  add: {
+    position: 'fixed',
+    bottom: 30,
+    right: 38
+  }
+  })
+)
 
 function Statuses(props) {
+  const classes = useStyles()
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -19,25 +31,27 @@ function Statuses(props) {
   };
 
   const dispatch = useDispatch();
-  const statuses = useSelector((state) => state.statuses.items);
+  const statuses = useSelector(selectStatuses);
 
   useEffect(() => dispatch(loadStatuses()), [dispatch]);
   return (
-    <div>
+    <Table className={styles.table}>
+      <TableBody>
       {statuses.map((status) => {
         return <Status status={status} key={status.id} />;
       })}
-      <Grid item>
+      <Grid item classes={{root: classes.add}}>
         <Fab color="primary" aria-label="add" onClick={handleOpen}>
           <AddIcon />
         </Fab>
       </Grid>
       <Grid item>
         {open ? (
-          <ModalsForStatus open={open} handleClose={handleClose} />
+          <ServerModal open={open} handleClose={handleClose} />
         ) : null}
       </Grid>
-    </div>
+      </TableBody>
+    </Table>
   );
 }
 

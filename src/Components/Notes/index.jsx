@@ -7,27 +7,18 @@ import {
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
-  TableRow,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loadNotes,
-  postNote,
-  selectLoadingNotes,
-  selectNotes,
-} from "../../redux/features/notes";
+import { loadNotes, postNote, selectNotes } from "../../redux/features/notes";
 import { useParams } from "react-router-dom";
 
 import { loadStudents } from "../../redux/features/students";
 import { loadStatuses } from "../../redux/features/statuses";
 import { makeStyles } from "@material-ui/core/styles";
 import Edit from "./Edit";
-import Fab from "@material-ui/core/Fab";
-import EditIcon from "@material-ui/icons/Edit";
 import styles from "../Students/styles.module.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,13 +31,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 30,
   },
   color: {
-    color: '#4c4dc3'
+    color: "#4c4dc3",
   },
   button: {
-    backgroundColor: '#4c4dc3',
-width: 185,
-  marginTop: 7
-  }
+    backgroundColor: "#4c4dc3",
+    width: 185,
+    marginTop: 7,
+  },
 }));
 
 function Notes(props) {
@@ -86,14 +77,18 @@ function Notes(props) {
     <Container>
       <Grid container spacing={4} style={{ marginLeft: 10 }}>
         <Grid item>
-          <img src={students?.avatar} width="220px" />
+          <img src={students?.avatar} width="220px" alt={"avatar"} />
         </Grid>
         <Grid item>
           <Box>
-            <Typography variant={"h4"} classes={{root: classes.color}}>
+            <Typography variant={"h4"} classes={{ root: classes.color }}>
               {students?.firstName} {students?.lastName}
             </Typography>
-            <Typography variant={"h4"} color={"primary"} classes={{root: classes.color}}>
+            <Typography
+              variant={"h4"}
+              color={"primary"}
+              classes={{ root: classes.color }}
+            >
               {students?.patronymic}
             </Typography>
           </Box>
@@ -144,7 +139,7 @@ function Notes(props) {
               <Box>
                 <Button
                   style={{ marginTop: 7, width: 185 }}
-                  classes={{root: classes.button}}
+                  classes={{ root: classes.button }}
                   onClick={() => handleAdd(students._id)}
                   type="submit"
                   color={"primary"}
@@ -168,6 +163,7 @@ function Notes(props) {
                 if (item._id === note.status) {
                   return item;
                 }
+                return null;
               });
               return <Edit stat={stat} note={note} key={note._id} />;
             })}

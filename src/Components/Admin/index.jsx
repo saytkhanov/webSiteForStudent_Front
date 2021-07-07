@@ -5,16 +5,17 @@ import {
   Box,
   Button,
   Container,
-  Grid,
+  Grid, Table, TableBody,
   TextField,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 import Student from "./Student";
 import Preloader from "../Preloader";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Modals from "./Modal";
+import styles from '../Students/styles.module.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
   input: {
     width: 1225,
   },
+  add: {
+    position: 'fixed',
+    bottom: 30,
+    right: 38
+  }
 }));
 
 function StudentsAdmin(props) {
@@ -63,41 +69,58 @@ function StudentsAdmin(props) {
   return (
     <Container>
       {search ? (
-        <Box>
-          <Typography color="primary" variant="h5">
-            Поиск студента
-          </Typography>
-          <Button
-            color={"primary"}
-            variant={"outlined"}
-            onClick={handleChangeFalse}
-          >
-            Скрыть фильтр
-          </Button>
+        <>
+          <Box style={{ marginTop: 10 }}>
+            <Typography
+              color="primary"
+              variant="h4"
+              style={{ marginBottom: 12 }}
+            >
+              Поиск студента
+            </Typography>
+            <Button
+              color={"primary"}
+              variant={"contained"}
+              onClick={handleChangeFalse}
+            >
+              Скрыть фильтр
+            </Button>
+          </Box>
           <TextField
             placeholder={"Поиск по имени..."}
             onChange={(e) => setValue(e.target.value)}
-            classes={{ root: classes.input }}
+            variant={"outlined"}
+            style={{ paddingLeft: 8 }}
+            margin="normal"
+            multiline
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
-        </Box>
+        </>
       ) : (
-        <Box>
-          <Typography color="primary" variant="h5">
+        <Box style={{ marginTop: 10 }}>
+          <Typography style={{ marginBottom: 12 }} color="primary" variant="h4">
             Поиск студента
           </Typography>
           <Button
             color={"primary"}
-            variant={"outlined"}
+            variant={"contained"}
             onClick={handleChangeTrue}
           >
             Показать фильтр
           </Button>
         </Box>
       )}
+      <Table className={styles.table}>
+        <TableBody>
       {students.map((student) => {
         return <Student student={student} key={student._id} />;
       })}
-      <Grid item>
+        </TableBody>
+      </Table>
+      <Grid item  classes={{root: classes.add}}>
         <Fab color="primary" aria-label="add" onClick={handleOpen}>
           <AddIcon />
         </Fab>

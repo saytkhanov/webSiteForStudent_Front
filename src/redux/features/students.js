@@ -1,7 +1,8 @@
 const initialState = {
   items: [],
   loading: false,
-  deleting: false
+  deleting: false,
+  error: null
 };
 
 export default function reducers(state = initialState, action) {
@@ -17,6 +18,12 @@ export default function reducers(state = initialState, action) {
         loading: false,
         items: action.payload,
       };
+    case "students/load/rejected":
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      }
     case "students/create/pending":
       return {
         ...state,
@@ -32,7 +39,7 @@ export default function reducers(state = initialState, action) {
       return {
         ...state,
         deleting: false,
-        items: state.items.filter((student) => student.id !== action.payload),
+        items: state.items.filter((student) => student._id !== action.payload),
       };
     case "students/remove/pending":
       return {
@@ -47,12 +54,16 @@ export default function reducers(state = initialState, action) {
 export const loadStudents = () => {
   return async (dispatch) => {
     dispatch({ type: "students/load/pending" });
-    const response = await fetch(`http://localhost:3004`);
-    const json = await response.json();
-    dispatch({
-      type: "students/load/fulfilled",
-      payload: json,
-    });
+   try {
+     const response = await fetch(`http://localhost:3004`);
+     const json = await response.json();
+     dispatch({
+       type: "students/load/fulfilled",
+       payload: json,
+     });
+   } catch (e) {
+     dispatch({ type: 'students/load/rejected', error: e.toString() });
+   }
   };
 };
 

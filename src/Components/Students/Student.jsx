@@ -66,7 +66,7 @@ function Student({ student, key, elem }) {
           </Box>
         </TableCell>
         <TableCell classes={{ root: classes.td }}>
-          {student.notes.length}
+          {student.notes?.length}
         </TableCell>
       </TableRow>
     </>

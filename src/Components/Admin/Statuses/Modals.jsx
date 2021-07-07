@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import Modal from "@material-ui/core/Modal";
-import { Button, makeStyles, TextField } from "@material-ui/core";
-import { postNote } from "../../../redux/features/notes";
+import { Box, Button, makeStyles, TextField, Typography } from '@material-ui/core'
 import { useDispatch } from "react-redux";
-import { postStudent } from "../../../redux/features/students";
 import { postStatus } from "../../../redux/features/statuses";
+import styles from './styles.module.css'
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50
+  const left = 50
+  const width = '460px'
+  const height = '280px'
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    width: `${width}`,
+    height: `${height}`
   };
 }
 
@@ -30,6 +31,15 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  modal: {
+    top: 50,
+    left: 50,
+    transform: `translate(-${50}%, -${50}%)`
+  },
+  button: {
+    marginTop: 20,
+    width: 140
+  }
 }));
 
 function ModalsForStatus({ open, handleClose }) {
@@ -58,23 +68,33 @@ function ModalsForStatus({ open, handleClose }) {
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
-      <div style={modalStyle} className={classes.paper}>
-        <h2 id="simple-modal-title">Добавить студента</h2>
+      <div style={modalStyle} className={classes.paper} >
+        <Typography style={{marginTop: 20}} color={'primary'}  variant={'h3'} id="simple-modal-title">Статус</Typography>
         <form>
+          <Box style={{marginTop: 20}}>
           <TextField
-            name="patronymic"
+            name="status"
+            style={{width: 300}}
+            multiline
+            rows={2}
             value={status}
+            placeholder={'Напишите статус...'}
             onChange={handleAddStatus}
+            variant={'outlined'}
           />
-          <TextField
+          <input
             type="color"
-            name="avatar"
+            className={styles.input}
+            name="color"
             value={color}
             onChange={handleAddColor}
           />
-          <Button onClick={handleAdd} type="submit">
+          </Box>
+          <Box>
+          <Button color={'primary'} classes={{root: classes.button}} variant={'contained'} onClick={handleAdd} type="submit">
             Добавить
           </Button>
+          </Box>
         </form>
         <ModalsForStatus />
       </div>

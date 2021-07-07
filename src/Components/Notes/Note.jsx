@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Box,
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select, Table, TableCell, TableRow,
-  TextField,
-  Typography,
+  TableCell, TableRow,
 } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import EditIcon from "@material-ui/icons/Edit";
-import { loadStatuses, selectLoadingStatuses, selectStatuses } from '../../redux/features/statuses'
+import { loadStatuses} from '../../redux/features/statuses'
 
 import Fab from "@material-ui/core/Fab";
 
@@ -43,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 function Note({ note,  stat, setIsEditing }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const loading = useSelector(selectLoadingStatuses);
   useEffect(() => dispatch(loadStatuses()), [dispatch]);
 
 

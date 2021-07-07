@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "@material-ui/core/Modal";
-import { Button, makeStyles, TextField } from "@material-ui/core";
+import { Box, Button, makeStyles, TextField, Typography } from '@material-ui/core'
 import { useDispatch } from "react-redux";
-import { createStudent, postStudent } from '../../redux/features/students'
-import { loadStatuses } from "../../redux/features/statuses";
+import { createStudent} from '../../redux/features/students'
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
@@ -23,12 +20,16 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 400,
+    width: 490,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  textField: {
+    marginBottom: 13,
+    marginTop: 10
+  }
 }));
 
 function Modals({ open, handleClose }) {
@@ -56,7 +57,7 @@ function Modals({ open, handleClose }) {
     setAvatar(e.target.value);
   };
 
-  const handleAddStudent = (e) => {
+  const handleAddStudent = () => {
     dispatch(
       createStudent({
         firstName,
@@ -76,26 +77,46 @@ function Modals({ open, handleClose }) {
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
-      <div style={modalStyle} className={classes.paper}>
-        <h2 id="simple-modal-title">Добавить студента</h2>
+      <div style={modalStyle} className={classes.paper} >
+        <Typography variant={'h4'} align={'center'} color={'primary'} id="simple-modal-title">Студент</Typography>
         <form>
           <TextField
+            fullWidth
+            multiline
+            variant={'outlined'}
+            classes={{root: classes.textField}}
+            placeholder={'Введите фамилию'}
             name="firstName"
             value={firstName}
             onChange={handleAddFirstName}
           />
           <TextField
             name="lastName"
+            fullWidth
+            multiline
+            variant={'outlined'}
+            placeholder={'Введите имя'}
+            classes={{root: classes.textField}}
             value={lastName}
             onChange={handleAddLastName}
           />
           <TextField
             name="patronymic"
+            fullWidth
+            multiline
+            classes={{root: classes.textField}}
+            variant={'outlined'}
+            placeholder={'Введите отчество'}
             value={patronymic}
             onChange={handleAddPatronymic}
           />
-          <TextField name="avatar" value={avatar} onChange={handleAddAvatar} />
-          <Button onClick={handleAddStudent} type="submit">Добавить</Button>
+          <TextField fullWidth classes={{root: classes.textField}}
+                     multiline
+                     variant={'outlined'}
+                     placeholder={'Вставьте ссылку'} name="avatar" value={avatar} onChange={handleAddAvatar} />
+          <Box textAlign={'center'}>
+          <Button variant={'contained'} color={'primary'} onClick={handleAddStudent} type="submit">Добавить</Button>
+          </Box>
         </form>
         <Modals />
       </div>

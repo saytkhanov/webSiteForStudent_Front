@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Students from "../Students";
-import { Box, Button, Container, Grid, Paper, Typography } from '@material-ui/core'
+import { Container, Grid, Paper} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Notes from '../Notes';
 import StudentsAdmin from '../Admin'

@@ -1,6 +1,4 @@
 import React from "react";
-import { makeStyles, withStyles } from "@material-ui/core";
-import styles from "./styles.module.css";
 import { TableHead, TableRow, TableCell } from "@material-ui/core";
 
 

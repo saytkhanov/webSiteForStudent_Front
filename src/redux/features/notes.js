@@ -1,7 +1,8 @@
 const initialState = {
   items: [],
   loading: false,
-  editing: false
+  editing: false,
+  error: null
 }
 
 
@@ -17,6 +18,12 @@ export default function reducers( state= initialState, action) {
         ...state,
         loading: false,
         items: action.payload
+      }
+    case "notes/load/rejected":
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
       }
     case "notes/create/pending":
       return {
@@ -39,7 +46,7 @@ export default function reducers( state= initialState, action) {
         ...state,
         editing: false,
         items: state.items.map((item) => {
-          if(item.id === action.payload.id) {
+          if(item._id === action.payload.id) {
             return {
               ...item,
               ...action.payload.data
@@ -57,12 +64,16 @@ export default function reducers( state= initialState, action) {
 export const loadNotes = (id) => {
   return async (dispatch) => {
     dispatch({type: "notes/load/pending" })
-    const response = await fetch(`http://localhost:3004/student/${id}/note`)
-    const json = await response.json();
-    dispatch({
-      type: "notes/load/fulfilled",
-      payload: json
-    })
+    try {
+      const response = await fetch(`http://localhost:3004/student/${id}/note`)
+      const json = await response.json();
+      dispatch({
+        type: "notes/load/fulfilled",
+        payload: json
+      })
+    } catch (e) {
+      dispatch({ type: 'notes/load/rejected', error: e.toString() });
+    }
   }
 }
 
@@ -98,7 +109,7 @@ export const postNote = (id, data) => {
     const json = await response.json()
     dispatch({
       type: "notes/create/fulfilled",
-      payload: { json, id }
+      payload:  json
     })
   }
 }

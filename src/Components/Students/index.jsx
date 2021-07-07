@@ -10,7 +10,6 @@ import {
   Box,
   Button,
   Container,
-  Grid,
   Paper,
   Table,
   TableBody,
@@ -39,10 +38,9 @@ function Students(props) {
   const dispatch = useDispatch();
   const students = useSelector((state) => {
     return state.students.items
-      .map((item) => item)
       .filter((item) => {
         return item.firstName.toLowerCase().includes(value.toLowerCase());
-      });
+      })
   });
 
   const loading = useSelector(selectLoadingStudents);

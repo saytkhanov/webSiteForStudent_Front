@@ -1,26 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
-  Button,
-  Grid,
-  makeStyles,
-  TextField,
+  makeStyles, TableCell, TableRow,
   Typography,
-} from "@material-ui/core";
-import ModalsForStatus from "./Modals";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
+} from '@material-ui/core'
+
+
+const useStyles = makeStyles((theme) => ({
+  statusName: {
+    color: '#4c4dc3',
+    fontSize: 25,
+    fontWeight: 'bold'
+  }
+}))
 
 function Status({ status, key }) {
+  const classes = useStyles();
+
+
   return (
-    <Grid container key={key} spacing={4}>
-      <Grid item lg={"6"}>
-        <Typography>{status.status}</Typography>
-      </Grid>
-      <Grid item lg={"6"}>
-        <Box bgcolor={status.color}>1</Box>
-      </Grid>
-    </Grid>
+  <TableRow key={key} >
+    <TableCell style={{fontSize: 18}}>
+      <Typography classes={{root: classes.statusName}}>{status.status}</Typography>
+    </TableCell>
+    <TableCell style={{width: 150, textAlign: 'center'}}>
+      <Box bgcolor={status.color} style={{borderRadius: 100, width: 60, height: 60}}/>
+    </TableCell>
+  </TableRow>
   );
 }
 
